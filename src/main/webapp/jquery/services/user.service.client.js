@@ -8,6 +8,7 @@ function UserServiceClient() {
     this.login = login;
     this.url = 'http://localhost:8080/api/user';
     this.registerUrl = 'http://localhost:8080/api/register';
+    this.loginUrl = 'http://localhost:8080/api/login';
     var self = this;
 
     function createUser(user) {
@@ -55,6 +56,23 @@ function UserServiceClient() {
 
     function register(user) {
         return fetch(self.registerUrl, {
+            method: 'post',
+            body: JSON.stringify(user),
+            headers: {
+                'content-type': 'application/json'
+            }
+        });
+    }
+
+    function login(username, password) {
+        var user = {
+            username: username,
+            password: password,
+            firstName: null,
+            lastName: null,
+            role: null
+        };
+        return fetch(self.loginUrl, {
             method: 'post',
             body: JSON.stringify(user),
             headers: {

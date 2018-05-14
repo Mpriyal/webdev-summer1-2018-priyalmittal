@@ -16,7 +16,14 @@
         userService.login(username,password).then(loginSuccessful);
     }
 
-    function loginSuccessful() {
-        alert("Logged in successfully!");
+
+    function loginSuccessful(response) {
+        console.log(response);
+        if(response == null) {
+            alert("Login successful!");
+        }
+        else if(response.status == 409){
+            alert('Incorrect credentials');
+        }
     }
 })();

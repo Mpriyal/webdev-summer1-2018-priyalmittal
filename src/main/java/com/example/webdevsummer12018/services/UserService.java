@@ -3,6 +3,8 @@ package com.example.webdevsummer12018.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -81,21 +83,28 @@ public class UserService {
 	}
 	
 	@PostMapping("/api/register")
-	public User register(@RequestBody User user) {
+	public User register(@RequestBody User user, HttpServletResponse response) {
 		List<User> user_list = (List<User>) userRepository.findUserByUsername(user.getUsername());
 		if (user_list.isEmpty()) {
 			return userRepository.save(user);
 		}
 		else
 		{
-			return null;
+			response.setStatus(HttpServletResponse.SC_CONFLICT);
 		}
+		return user;
 	}
 	
 	@PostMapping("/api/login")
-	public List<User> login(@RequestBody User user) {
-		return (List<User>) userRepository.findUserByCredentials(user.getUsername(), user.getPassword());
+	public User login(@RequestBody User user, HttpServletResponse response) {
+		List<User> user_list2 =  (List<User>) userRepository.findUserByCredentials(user.getUsername(), user.getPassword());
+		if(!user_list2.isEmpty()) {
+			return userRepository.save(user);
+		}
+		else {
+			response.setStatus(HttpServletResponse.SC_CONFLICT);
+		}
+		return user;
 	}
 
-	
 }

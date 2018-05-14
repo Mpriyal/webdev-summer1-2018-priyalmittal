@@ -36,7 +36,13 @@
         userService.register(user).then(signUpSuccessful);
     }
 
-    function signUpSuccessful() {
-        alert('Signed up successfully!');
+    function signUpSuccessful(response) {
+        console.log(response);
+        if(response == null) {
+            alert("Sign Up successful!");
+        }
+        else if(response.status == 409){
+            alert('Username already exists. Please, choose another username!');
+        }
     }
 })();
