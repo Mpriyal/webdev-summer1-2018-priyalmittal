@@ -64,7 +64,6 @@
                 lastName: lastName,
                 role: role
             };
-
             userService.updateUser(userIdGlobal,user).then(findAllUsers);
             userIdGlobal = null;
         }
@@ -73,7 +72,6 @@
             var editBtn = $(event.currentTarget);
             var userId = editBtn.parent().parent().parent().parent().attr('id');
             userIdGlobal = userId;
-            // console.log(userId);
             findUserById(userId).then(function (user) {
                 $('#usernameFld').val(user.username);
                 $('#passwordFld').val(user.password);
@@ -81,10 +79,6 @@
                 $('#lastNameFld').val(user.lastName);
                 $('#roleFld').val(user.role);
             })
-            // var password = $('#passwordFld').val();
-            // var firstName = $('#firstNameFld').val();
-            // var lastName = $('#lastNameFld').val();
-            // var role = $('#roleFld').val();
         }
 
         function renderUsers(users) {
