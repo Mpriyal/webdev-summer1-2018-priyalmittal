@@ -39,7 +39,23 @@
 		}
 
 		function deleteUser(event) {
-            console.log(event);
+            var deleteBtn = $(event.currentTarget);
+            var userId = deleteBtn.parent().parent().parent().parent().attr('id');
+            userService.deleteUser(userId);
+        }
+
+        function updateUser(event) {
+            var editBtn = $(event.currentTarget);
+            var userId = editBtn.parent().parent().parent().parent().attr('id');
+            var username = $('#usernameFld').val();
+            var password = $('#passwordFld').val();
+            var firstName = $('#firstNameFld').val();
+            var lastName = $('#lastNameFld').val();
+            var role = $('#roleFld').val();
+
+            var user = new User(username, password, firstName, lastName, null, null, role, null);
+
+            userService.updateUser(userId, user).then(findAllUsers);
         }
 
         function renderUsers(users) {
@@ -48,13 +64,14 @@
             for (var i = 0; i < users.length; i++) {
                 var user = users[i];
                 var clone = template.clone();
+                clone.attr('id', user.id);
                 clone.find('.wbdv-username').html(user.username);
                 clone.find('.wbdv-password').html(user.password);
                 clone.find('.wbdv-first-name').html(user.firstName);
                 clone.find('.wbdv-last-name').html(user.lastName);
                 clone.find('.wbdv-role').html(user.role);
                 clone.find('.wbdv-remove').click(deleteUser);
-                // clone.find('.wbdv-edit').click(updateUser);
+                clone.find('.wbdv-edit').click(updateUser);
                 tbody.append(clone);
             }
         }
