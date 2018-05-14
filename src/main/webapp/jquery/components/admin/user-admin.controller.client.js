@@ -3,12 +3,14 @@
         jQuery(main);
         var tbody;
         var template;
+        var userIdGlobal;
         var userService = new UserServiceClient();
 
         function main() {
             tbody = $('tbody');
             template = $('.wbdv-template');
             $('#wbdv-create').click(createUser);
+            $('#wbdv-update').click(updateUser);
             findAllUsers();
         }
 
@@ -41,21 +43,48 @@
 		function deleteUser(event) {
             var deleteBtn = $(event.currentTarget);
             var userId = deleteBtn.parent().parent().parent().parent().attr('id');
+
             userService.deleteUser(userId);
         }
 
-        function updateUser(event) {
-            var editBtn = $(event.currentTarget);
-            var userId = editBtn.parent().parent().parent().parent().attr('id');
+        function findUserById(userId) {
+            return userService.findUserById(userId);
+        }
+
+        function updateUser() {
             var username = $('#usernameFld').val();
             var password = $('#passwordFld').val();
             var firstName = $('#firstNameFld').val();
             var lastName = $('#lastNameFld').val();
             var role = $('#roleFld').val();
+            var user = {
+                username: username,
+                password: password,
+                firstName: firstName,
+                lastName: lastName,
+                role: role
+            };
 
-            var user = new User(username, password, firstName, lastName, null, null, role, null);
+            userService.updateUser(userIdGlobal,user).then(findAllUsers);
+            userIdGlobal = null;
+        }
 
-            userService.updateUser(userId, user).then(findAllUsers);
+        function editUser(event) {
+            var editBtn = $(event.currentTarget);
+            var userId = editBtn.parent().parent().parent().parent().attr('id');
+            userIdGlobal = userId;
+            // console.log(userId);
+            findUserById(userId).then(function (user) {
+                $('#usernameFld').val(user.username);
+                $('#passwordFld').val(user.password);
+                $('#firstNameFld').val(user.firstName);
+                $('#lastNameFld').val(user.lastName);
+                $('#roleFld').val(user.role);
+            })
+            // var password = $('#passwordFld').val();
+            // var firstName = $('#firstNameFld').val();
+            // var lastName = $('#lastNameFld').val();
+            // var role = $('#roleFld').val();
         }
 
         function renderUsers(users) {
@@ -71,7 +100,7 @@
                 clone.find('.wbdv-last-name').html(user.lastName);
                 clone.find('.wbdv-role').html(user.role);
                 clone.find('.wbdv-remove').click(deleteUser);
-                clone.find('.wbdv-edit').click(updateUser);
+                clone.find('.wbdv-edit').click(editUser);
                 tbody.append(clone);
             }
         }
