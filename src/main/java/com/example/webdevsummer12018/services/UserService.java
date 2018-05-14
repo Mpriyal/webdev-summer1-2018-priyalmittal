@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.webdevsummer12018.models.User;
+import com.example.webdevsummer12018.models.UsernameExists;
 import com.example.webdevsummer12018.repositories.UserRepository;
 
 @RestController
@@ -68,5 +69,29 @@ public class UserService {
 	public void deleteUser(@PathVariable("userId") int userId) {
 		userRepository.deleteById(userId);
 	}
+	
+	public User findUserByUsername(String username) {
+		User user = null;
+		List<User> user_list = (List<User>) userRepository.findUserByUsername(username);
+		for (User user2 : user_list) {
+			user = user2;
+			break;
+		}
+		return user;
+	}
+	
+	@PostMapping("/api/register")
+	public User register(@RequestBody User user) {
+		User new_user = findUserByUsername(user.getUsername());
+		if(new_user==null) {
+			userRepository.save(new_user);
+			user = findUserByUsername(user.getUsername());
+		}
+		else {
+			throw new UsernameExists("id-" + user.getId());
+		}
+		return user;
+	}
+
 	
 }
