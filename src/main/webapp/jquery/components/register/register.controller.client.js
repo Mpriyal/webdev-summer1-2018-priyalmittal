@@ -3,7 +3,7 @@
     var $registerBtn;
     var $loginBtn;
     var userService = new UserServiceClient();
-    // var loginPage = "http://localhost:8080/jquery/components/login/login.template.client.html";
+    var loginPage = "http://localhost:8080/jquery/components/login/login.template.client.html";
     $(main);
 
     function main() {
@@ -13,9 +13,14 @@
         $registerBtn = $('#signUpBtn')
         $loginBtn = $('#loginBtn')
         $registerBtn.click(register);
+        $loginBtn.click(goToLogin);
 
         // $loginBtn.attr("href",loginPage);
 
+    }
+
+    function goToLogin() {
+        window.location.href=loginPage;
     }
 
     function register() {
@@ -38,11 +43,12 @@
 
     function signUpSuccessful(response) {
         console.log(response);
-        if(response == null) {
+        if(response.status == 200) {
             alert("Sign Up successful!");
         }
         else if(response.status == 409){
             alert('Username already exists. Please, choose another username!');
         }
     }
+
 })();

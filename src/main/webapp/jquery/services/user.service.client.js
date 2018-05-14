@@ -70,7 +70,10 @@ function UserServiceClient() {
             password: password,
             firstName: null,
             lastName: null,
-            role: null
+            email: null,
+            phone: null,
+            role: null,
+            dateOfBirth: null
         };
         return fetch(self.loginUrl, {
             method: 'post',

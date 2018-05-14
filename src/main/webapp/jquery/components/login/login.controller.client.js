@@ -7,7 +7,7 @@
     function main() {
         $usernameFld = $('#username');
         $passwordFld = $('#password');
-        $loginBtn = $('#signUpBtn');
+        $loginBtn = $('#signInBtn');
         $loginBtn.click(login);
     }
     function login() {
@@ -16,10 +16,9 @@
         userService.login(username,password).then(loginSuccessful);
     }
 
-
     function loginSuccessful(response) {
         console.log(response);
-        if(response == null) {
+        if(response.status == 200) {
             alert("Login successful!");
         }
         else if(response.status == 409){
