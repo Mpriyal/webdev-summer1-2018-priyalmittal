@@ -22,8 +22,6 @@
 				<th>Role</th>
 				<th>&nbsp;</th>
 			</tr>
-		</thead>
-		<tbody class="wbdv-tbody">
 			<tr class="wbdv-form">
 				<td><input id="usernameFld" class="form-control" placeholder="Username"/></td>
 				<td><input id="passwordFld" class="form-control" placeholder="Password"/></td>
@@ -44,9 +42,11 @@
           			</span>
           		</td>
           	</tr>
-          	<tr class="wbdv-template wbdv-user wbdv-hidden" >
+		</thead>
+		<tbody class="wbdv-tbody">
+          	<tr class="wbdv-template wbdv-user wbdv-hidden">
           		<td class="wbdv-username">tlee</td>
-          		<td>&nbsp;</td>
+          		<td class="wbdv-password">&nbsp;</td>
           		<td class="wbdv-first-name">Tim</td>
           		<td class="wbdv-last-name">Birns Lee</td>
           		<td class="wbdv-role">FACULTY</td>
@@ -62,8 +62,8 @@
 	</div>
 	<script
 			src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<!--<script src="../../services/user.service.client.js"></script>-->
-	<!--<script src="../../models/user.model.client.js"></script>-->
+	<script src="../../services/user.service.client.js"></script>
+	<script src="../../models/user.model.client.js"></script>
 	<script src="user-admin.controller.client.js"></script>
 	<script
 			src="https://code.jquery.com/jquery-3.3.1.min.js"
