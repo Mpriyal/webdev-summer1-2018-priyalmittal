@@ -5,6 +5,7 @@ function UserServiceClient() {
     this.updateUser = updateUser;
     this.findUserById = findUserById;
     this.register = register;
+    this.login = login;
     this.url = 'http://localhost:8080/api/user';
     this.registerUrl = 'http://localhost:8080/api/register';
     var self = this;

@@ -82,15 +82,19 @@ public class UserService {
 	
 	@PostMapping("/api/register")
 	public User register(@RequestBody User user) {
-		User new_user = findUserByUsername(user.getUsername());
-		if(new_user==null) {
-			userRepository.save(new_user);
-			user = findUserByUsername(user.getUsername());
+		List<User> user_list = (List<User>) userRepository.findUserByUsername(user.getUsername());
+		if (user_list.isEmpty()) {
+			return userRepository.save(user);
 		}
-		else {
-			throw new UsernameExists("id-" + user.getId());
+		else
+		{
+			return null;
 		}
-		return user;
+	}
+	
+	@PostMapping("/api/login")
+	public List<User> login(@RequestBody User user) {
+		return (List<User>) userRepository.findUserByCredentials(user.getUsername(), user.getPassword());
 	}
 
 	
