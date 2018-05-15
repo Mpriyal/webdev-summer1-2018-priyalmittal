@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -95,13 +96,38 @@ public class UserService {
 	
 	@PostMapping("/api/login")
 	public User login(@RequestBody User user, HttpServletResponse response) {
-		List<User> user_list2 =  (List<User>) userRepository.findUserByCredentials(user.getUsername(), user.getPassword());
-		if(!user_list2.isEmpty()) {
-			return user;
+		Iterable<User> user1 =  userRepository.findUserByCredentials(user.getUsername(), user.getPassword());
+		for (User user2 : user1) {
+			return user2;
 		}
-		else {
-			response.setStatus(HttpServletResponse.SC_CONFLICT);
-		}
+//		else {
+//			response.setStatus(HttpServletResponse.SC_CONFLICT);
+//		}
+		response.setStatus(HttpServletResponse.SC_CONFLICT);
 		return null;
 	}
+	
+	@GetMapping("/api/session/set/{attr}/{value}")
+	public String setSessionAttribute(
+			@PathVariable("attr") String attr,
+			@PathVariable("value") String value,
+			HttpSession session) {
+		session.setAttribute(attr, value);
+		return attr + " = " + value;
+	}
+	
+	@GetMapping("/api/session/get/{attr}")
+	public String getSessionAttribute(
+			@PathVariable ("attr") String attr,
+			HttpSession session) {
+		return (String) session.getAttribute(attr);
+	}
+
+	@GetMapping("/api/session/invalidate")
+	public String invalidateSession(
+	HttpSession session) {
+		session.invalidate();
+	return "session invalidated";
+	}
+
 }

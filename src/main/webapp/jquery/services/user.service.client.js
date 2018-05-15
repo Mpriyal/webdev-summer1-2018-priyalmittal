@@ -6,9 +6,11 @@ function UserServiceClient() {
     this.findUserById = findUserById;
     this.register = register;
     this.login = login;
+    this.setSession = setSession;
     this.url = 'http://localhost:8080/api/user';
     this.registerUrl = 'http://localhost:8080/api/register';
     this.loginUrl = 'http://localhost:8080/api/login';
+    this.setSessionUrl = 'http://localhost:8080/api/session/set';
     var self = this;
 
     function createUser(user) {
@@ -20,23 +22,6 @@ function UserServiceClient() {
             }
         });
     }
-
-    // function updateUser(userId, user) {
-    //     return fetch(self.url + '/' + userId, {
-    //         method: 'put',
-    //         body: JSON.stringify(user),
-    //         headers: {
-    //             'content-type': 'application/json'
-    //         }
-    //     }).then(function (response) {
-    //         // if(response.bodyUsed) {
-    //             return response.json();
-    //         // }
-    //         // else {
-    //         //     return null;
-    //         // }
-    //     })
-    // }
 
     function updateUser(userId,user) {
         return fetch(self.url+"/"+userId, {
@@ -97,9 +82,23 @@ function UserServiceClient() {
             headers: {
                 'content-type': 'application/json'
             }
+        })
+            .then(function (response){
+                if (response.status == 409){
+                    return null;
+                }
+            return response.json();
         });
-        //     .then(function (response){
-        //     return response.json();
-        // });
+    }
+
+    function setSession(username, password) {
+        return fetch(self.setSessionUrl+'/username/'+username)
+            .then(function (userResponse) {
+                return fetch(self.setSessionUrl+'/password/'+password)
+                    .then(function (passResponse) {
+                    console.log(userResponse+ passResponse);
+                    return userResponse+ passResponse;
+                    });
+            });
     }
 }

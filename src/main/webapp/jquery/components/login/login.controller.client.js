@@ -18,13 +18,14 @@
     }
 
     function loginSuccessful(response) {
-        if(response.status == 200) {
-            sessionStorage.username = response.username;
-            sessionStorage.password = response.password;
-            alert("Login successful!");
-            window.location.href=profilePage;
+        console.log(response);
+        if(response!=null && response.username!=null && response.password!=null) {
+            userService.setSession(response.username, response.password).then(function () {
+                alert("Login successful!");
+                // window.location.href=profilePage;
+            });
         }
-        else if(response.status == 409){
+        else {
             alert('Incorrect credentials');
         }
     }
