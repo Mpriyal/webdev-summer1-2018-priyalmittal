@@ -35,10 +35,8 @@ public class UserService {
 	
 	@GetMapping("/api/user/{userId}")
 	public User findUserById(@PathVariable("userId") int userId) {
-		System.out.println(userId+" nnnnnnnnnnnnn");
 		Optional<User> data = userRepository.findById(userId);
 		if(data.isPresent()) {
-			System.out.println(data.get().getUsername());
 			return data.get();
 		}
 		else {
@@ -47,10 +45,12 @@ public class UserService {
 	}
 	
 	@PutMapping("/api/user/{userId}")
-	public User updateUser(@RequestBody User newUser, @PathVariable("userId") int userId) {
+	public User updateUser(@PathVariable("userId") int userId, @RequestBody User newUser) {
 		Optional<User> data = userRepository.findById(userId);
 		if(data.isPresent()) {
+			
 			User user = data.get();
+			
 			user.setFirstName(newUser.getFirstName());
 			user.setLastName(newUser.getLastName());
 			user.setDateOfBirth(newUser.getDateOfBirth());
@@ -62,9 +62,7 @@ public class UserService {
 			userRepository.save(user);
 			return user;
 		}
-		else {
 		return null;
-		}
 	}
 	
 	@DeleteMapping("/api/user/{userId}")
@@ -99,11 +97,11 @@ public class UserService {
 	public User login(@RequestBody User user, HttpServletResponse response) {
 		List<User> user_list2 =  (List<User>) userRepository.findUserByCredentials(user.getUsername(), user.getPassword());
 		if(!user_list2.isEmpty()) {
-			return userRepository.save(user);
+			return user;
 		}
 		else {
 			response.setStatus(HttpServletResponse.SC_CONFLICT);
 		}
-		return user;
+		return null;
 	}
 }

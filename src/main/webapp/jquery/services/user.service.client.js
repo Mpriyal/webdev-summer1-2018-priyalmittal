@@ -21,24 +21,40 @@ function UserServiceClient() {
         });
     }
 
-    function updateUser(userId, user) {
-        return fetch(self.url + '/' + userId, {
+    // function updateUser(userId, user) {
+    //     return fetch(self.url + '/' + userId, {
+    //         method: 'put',
+    //         body: JSON.stringify(user),
+    //         headers: {
+    //             'content-type': 'application/json'
+    //         }
+    //     }).then(function (response) {
+    //         // if(response.bodyUsed) {
+    //             return response.json();
+    //         // }
+    //         // else {
+    //         //     return null;
+    //         // }
+    //     })
+    // }
+
+    function updateUser(userId,user) {
+        return fetch(self.url+"/"+userId, {
             method: 'put',
             body: JSON.stringify(user),
             headers: {
-                'content-type': 'application/json'
+                'content-type' : 'application/json'
             }
         }).then(function (response) {
             return response.json();
-
-        });
+        })
     }
 
-    function findUserById(userId){
+    function findUserById(userId) {
         return fetch(self.url+'/'+userId)
-            .then(function (response){
-            return response.json();
-        });
+            .then(function(response) {
+                return response.json();
+            });
     }
 
     function deleteUser(userId) {
@@ -82,6 +98,8 @@ function UserServiceClient() {
                 'content-type': 'application/json'
             }
         });
+        //     .then(function (response){
+        //     return response.json();
+        // });
     }
-
 }

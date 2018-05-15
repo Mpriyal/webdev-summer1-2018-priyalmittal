@@ -68,6 +68,14 @@
             userIdGlobal = null;
         }
 
+        // function emptyFields() {
+        //     $('#usernameFld').val(null);
+        //     $('#passwordFld').val(null);
+        //     $('#firstNameFld').val(null);
+        //     $('#lastNameFld').val(null);
+        //     $('#roleFld').val(null);
+        // }
+
         function editUser(event) {
             var editBtn = $(event.currentTarget);
             var userId = editBtn.parent().parent().parent().parent().attr('id');

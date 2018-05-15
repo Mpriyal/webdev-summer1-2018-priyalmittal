@@ -3,7 +3,7 @@
     var $registerBtn;
     var $loginBtn;
     var userService = new UserServiceClient();
-    var loginPage = "http://localhost:8080/jquery/components/login/login.template.client.html";
+    var loginPage = "../login/login.template.client.html";
     $(main);
 
     function main() {
@@ -14,8 +14,6 @@
         $loginBtn = $('#loginBtn')
         $registerBtn.click(register);
         $loginBtn.click(goToLogin);
-
-        // $loginBtn.attr("href",loginPage);
 
     }
 
