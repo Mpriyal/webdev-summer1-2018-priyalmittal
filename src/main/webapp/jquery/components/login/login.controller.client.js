@@ -2,7 +2,7 @@
     var $usernameFld, $passwordFld;
     var $loginBtn;
     var userService = new UserServiceClient();
-    var profilePage = "../profile/profile.template.client.html"
+    var profilePage = "../profile/profile.template.client.html";
     $(main);
 
     function main() {
@@ -22,10 +22,11 @@
         if(response!=null && response.username!=null && response.password!=null) {
             userService.setSession(response.username, response.password).then(function () {
                 alert("Login successful!");
-                // window.location.href=profilePage;
+                var userId = response.id;
+                window.location.href=profilePage+"?userId="+userId;
             });
         }
-        else {
+        else if (response == null) {
             alert('Incorrect credentials');
         }
     }

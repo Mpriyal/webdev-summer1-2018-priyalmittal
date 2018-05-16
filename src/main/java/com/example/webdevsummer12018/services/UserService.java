@@ -45,6 +45,18 @@ public class UserService {
 		}
 	}
 	
+	@PostMapping("/api/profile")
+	public User profile(@RequestBody User user) {
+		Optional<User> user1 = userRepository.findById(user.getId());
+		if (user1.isPresent()) {
+			return (User) user1.get();
+		}
+		else {
+			return null;
+		}
+	}
+	
+	
 	@PutMapping("/api/user/{userId}")
 	public User updateUser(@PathVariable("userId") int userId, @RequestBody User newUser) {
 		Optional<User> data = userRepository.findById(userId);
@@ -100,9 +112,6 @@ public class UserService {
 		for (User user2 : user1) {
 			return user2;
 		}
-//		else {
-//			response.setStatus(HttpServletResponse.SC_CONFLICT);
-//		}
 		response.setStatus(HttpServletResponse.SC_CONFLICT);
 		return null;
 	}

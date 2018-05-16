@@ -2,43 +2,35 @@
 
     var $email;
     var $username;
+    var $password;
     var $firstName;
     var $lastName;
     var $role;
     var $dob;
     var $phone;
     var $updateBtn;
-    var $globalId;
     var $logoutBtn;
     var loginPage = "../login/login.template.client.html";
     var userService = new UserServiceClient();
+    var profileURL = new URLSearchParams(window.location.search);
+    var getId = profileURL.get('userId');
 
-    if(sessionStorage.username!=undefined && sessionStorage.password!=undefined) {
-        userService.login(sessionStorage.username, sessionStorage.password)
-            .then(function (response) {
-                console.log(response);
-                console.log(response[0]);
-                $globalId = response.json().id;
-                init();
-            })
-    }
-    else {
-        init();
-    }
+    $(init);
 
     function init() {
+
         $email = $("#staticEmail");
         $username = $("#inputUsername");
+        $password = $("#inputPassword");
         $firstName = $("#firstName");
         $lastName = $("#lastName");
         $role = $("#roleFld");
         $dob = $("#dobFld");
         $phone = $("#phone");
-        $updateBtn = $("#updateBtn")
-        $logoutBtn = $("#logoutBtn")
-
-            if($globalId!=undefined){
-                findUserById($globalId);
+        $updateBtn = $("#updateBtn");
+        $logoutBtn = $("#logoutBtn");
+            if(getId!=null){
+                findUserById(getId);
             }
         $updateBtn.click(updateUser);
         $logoutBtn.click(logoutUser);
@@ -55,13 +47,14 @@
             firstName: $firstName.val(),
             lastName: $lastName.val(),
             username: $username.val(),
+            password: $password.val(),
             role: $role.val(),
             dob: $dob.val(),
             phone: $phone.val()
         };
         console.log(user);
         userService
-            .updateUser($globalId,user)
+            .updateUser(getId,user)
             .then(success);
 }
 
@@ -78,16 +71,16 @@
         console.log(user);
         $email.val(user.email);
         $username.val(user.username);
+        $password.val(user.password);
         $firstName.val(user.firstName);
         $lastName.val(user.lastName);
         $role.val(user.role);
         $phone.val(user.phone);
         $dob.val(user.dateOfBirth);
+        console.log($dob);
     }
 
     function logoutUser() {
-        sessionStorage.removeItem("username");
-        sessionStorage.removeItem("password");
         window.location.href=loginPage;
     }
 })();

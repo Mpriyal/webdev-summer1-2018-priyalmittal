@@ -7,10 +7,12 @@ function UserServiceClient() {
     this.register = register;
     this.login = login;
     this.setSession = setSession;
+    this.profile = profile;
     this.url = 'http://localhost:8080/api/user';
     this.registerUrl = 'http://localhost:8080/api/register';
     this.loginUrl = 'http://localhost:8080/api/login';
     this.setSessionUrl = 'http://localhost:8080/api/session/set';
+    this.profileUrl = 'http://localhost:8080/api/profile'
     var self = this;
 
     function createUser(user) {
@@ -100,5 +102,15 @@ function UserServiceClient() {
                     return userResponse+ passResponse;
                     });
             });
+    }
+
+    function profile(user) {
+        return fetch(self.profileUrl, {
+            method: 'post',
+            body: JSON.stringify(user),
+            headers: {
+                'content-type': 'application/json'
+            }
+        });
     }
 }

@@ -25,6 +25,7 @@
 
         var username = $usernameFld.val();
         var password = $passwordFld.val();
+        var verifyPassword = $verifyPasswordFld.val();
         var firstName = $('#firstNameFld').val();
         var lastName = $('#lastNameFld').val();
         var role = $('#roleFld').val();
@@ -36,7 +37,13 @@
             lastName: lastName,
             role: role
         };
-        userService.register(user).then(signUpSuccessful);
+
+        if(password == verifyPassword) {
+            userService.register(user).then(signUpSuccessful);
+        }
+        else {
+            alert("Password and verify password does not match!");
+        }
     }
 
     function signUpSuccessful(response) {
