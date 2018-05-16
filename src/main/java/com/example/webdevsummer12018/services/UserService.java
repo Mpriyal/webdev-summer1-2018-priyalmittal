@@ -46,7 +46,7 @@ public class UserService {
 	}
 	
 	@PostMapping("/api/profile")
-	public User profile(@RequestBody User user) {
+	public User updateProfile(@RequestBody User user) {
 		Optional<User> user1 = userRepository.findById(user.getId());
 		if (user1.isPresent()) {
 			return (User) user1.get();

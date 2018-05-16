@@ -8,11 +8,11 @@ function UserServiceClient() {
     this.login = login;
     this.setSession = setSession;
     this.profile = profile;
-    this.url = 'http://localhost:8080/api/user';
-    this.registerUrl = 'http://localhost:8080/api/register';
-    this.loginUrl = 'http://localhost:8080/api/login';
-    this.setSessionUrl = 'http://localhost:8080/api/session/set';
-    this.profileUrl = 'http://localhost:8080/api/profile'
+    this.url = window.location.origin+'/api/user';
+    this.registerUrl = window.location.origin+'/api/register';
+    this.loginUrl = window.location.origin+'/api/login';
+    this.setSessionUrl = window.location.origin+'/api/session/set';
+    this.profileUrl = window.location.origin+'/api/profile'
     var self = this;
 
     function createUser(user) {
