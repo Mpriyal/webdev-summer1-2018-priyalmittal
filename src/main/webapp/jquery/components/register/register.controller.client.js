@@ -47,7 +47,7 @@
             lastName: lastName,
             phone: phone,
             email: email,
-            dob: dob,
+            dateOfBirth: dob,
             role: role
         };
 
@@ -60,11 +60,10 @@
     }
 
     function signUpSuccessful(response) {
-        console.log(response);
         if(response!=null) {
             alert("Sign Up successful!");
             var userId = response.id;
-            window.location.href=profilePage+"?userId="+userId;
+                window.location.href=profilePage+"?userId="+userId;
         }
         else {
             alert('Username already exists. Please, choose another username!');

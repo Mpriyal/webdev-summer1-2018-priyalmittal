@@ -18,10 +18,6 @@
             userService.findAllUsers().then(renderUsers);
         }
 
-        /**
-		 * This function creates a user when the present input fields are
-		 * populated and the plus-sign button is clicked
-         */
         function createUser() {
         	var username = $('#usernameFld').val();
             var password = $('#passwordFld').val();
@@ -67,14 +63,6 @@
             userService.updateUser(userIdGlobal,user).then(findAllUsers);
             userIdGlobal = null;
         }
-
-        // function emptyFields() {
-        //     $('#usernameFld').val(null);
-        //     $('#passwordFld').val(null);
-        //     $('#firstNameFld').val(null);
-        //     $('#lastNameFld').val(null);
-        //     $('#roleFld').val(null);
-        // }
 
         function editUser(event) {
             var editBtn = $(event.currentTarget);

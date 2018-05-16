@@ -32,7 +32,7 @@
             if(getId!=null){
                 findUserById(getId);
             }
-        $updateBtn.click(updateUser);
+        $updateBtn.click(updateProfile);
         $logoutBtn.click(logoutUser);
     }
 
@@ -41,10 +41,11 @@
             .then(renderUser);
     }
 
-    function updateUser() {
+    function updateProfile() {
         var dob = new Date($dob.val());
         dob.setDate(dob.getDate()+1);
         var user = {
+            id: getId,
             email: $email.val(),
             firstName: $firstName.val(),
             lastName: $lastName.val(),
@@ -56,7 +57,7 @@
         };
         console.log(user);
         userService
-            .updateUser(getId,user)
+            .updateProfile(user)
             .then(success);
 }
 

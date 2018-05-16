@@ -45,15 +45,23 @@ public class UserService {
 		}
 	}
 	
-	@PostMapping("/api/profile")
-	public User updateProfile(@RequestBody User user) {
-		Optional<User> user1 = userRepository.findById(user.getId());
-		if (user1.isPresent()) {
-			return (User) user1.get();
+	@PutMapping("/api/profile")
+	public User updateProfile(@RequestBody User newUser) {
+		Optional<User> data = userRepository.findById(newUser.getId());
+		if(data.isPresent()) {
+			User user = data.get();
+			user.setFirstName(newUser.getFirstName());
+			user.setLastName(newUser.getLastName());
+			user.setDateOfBirth(newUser.getDateOfBirth());
+			user.setEmail(newUser.getEmail());
+			user.setUsername(newUser.getUsername());
+			user.setPassword(newUser.getPassword());
+			user.setRole(newUser.getRole());
+			user.setPhone(newUser.getPhone());
+			userRepository.save(user);
+			return user;
 		}
-		else {
-			return null;
-		}
+		return null;
 	}
 	
 	
@@ -95,6 +103,7 @@ public class UserService {
 	@PostMapping("/api/register")
 	public User register(@RequestBody User user, HttpServletResponse response) {
 		List<User> user_list = (List<User>) userRepository.findUserByUsername(user.getUsername());
+		System.out.println(user.getDateOfBirth());
 		if (user_list.isEmpty()) {
 			return userRepository.save(user);
 		}
@@ -115,27 +124,9 @@ public class UserService {
 		return null;
 	}
 	
-	@GetMapping("/api/session/set/{attr}/{value}")
-	public String setSessionAttribute(
-			@PathVariable("attr") String attr,
-			@PathVariable("value") String value,
-			HttpSession session) {
-		session.setAttribute(attr, value);
-		return attr + " = " + value;
-	}
-	
-	@GetMapping("/api/session/get/{attr}")
-	public String getSessionAttribute(
-			@PathVariable ("attr") String attr,
-			HttpSession session) {
-		return (String) session.getAttribute(attr);
-	}
-
-	@GetMapping("/api/session/invalidate")
-	public String invalidateSession(
-	HttpSession session) {
+	@PostMapping("/api/logout")
+	public void logout (HttpSession session) {
 		session.invalidate();
-	return "session invalidated";
 	}
 
 }

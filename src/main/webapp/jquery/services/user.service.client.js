@@ -6,12 +6,10 @@ function UserServiceClient() {
     this.findUserById = findUserById;
     this.register = register;
     this.login = login;
-    this.setSession = setSession;
-    this.profile = profile;
+    this.updateProfile = updateProfile;
     this.url = window.location.origin+'/api/user';
     this.registerUrl = window.location.origin+'/api/register';
     this.loginUrl = window.location.origin+'/api/login';
-    this.setSessionUrl = window.location.origin+'/api/session/set';
     this.profileUrl = window.location.origin+'/api/profile'
     var self = this;
 
@@ -27,6 +25,18 @@ function UserServiceClient() {
 
     function updateUser(userId,user) {
         return fetch(self.url+"/"+userId, {
+            method: 'put',
+            body: JSON.stringify(user),
+            headers: {
+                'content-type' : 'application/json'
+            }
+        }).then(function (response) {
+            return response.json();
+        })
+    }
+
+    function updateProfile(user) {
+        return fetch(self.profileUrl, {
             method: 'put',
             body: JSON.stringify(user),
             headers: {
@@ -96,27 +106,6 @@ function UserServiceClient() {
                     return null;
                 }
             return response.json();
-        });
-    }
-
-    function setSession(username, password) {
-        return fetch(self.setSessionUrl+'/username/'+username)
-            .then(function (userResponse) {
-                return fetch(self.setSessionUrl+'/password/'+password)
-                    .then(function (passResponse) {
-                    console.log(userResponse+ passResponse);
-                    return userResponse+ passResponse;
-                    });
-            });
-    }
-
-    function profile(user) {
-        return fetch(self.profileUrl, {
-            method: 'post',
-            body: JSON.stringify(user),
-            headers: {
-                'content-type': 'application/json'
-            }
         });
     }
 }

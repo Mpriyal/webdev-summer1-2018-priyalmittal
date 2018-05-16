@@ -18,13 +18,10 @@
     }
 
     function loginSuccessful(response) {
-        console.log(response);
         if(response!=null && response.username!=null && response.password!=null) {
-            userService.setSession(response.username, response.password).then(function () {
                 alert("Login successful!");
                 var userId = response.id;
                 window.location.href=profilePage+"?userId="+userId;
-            });
         }
         else if (response == null) {
             alert('Incorrect credentials');
