@@ -42,6 +42,8 @@
     }
 
     function updateUser() {
+        var dob = new Date($dob.val());
+        dob.setDate(dob.getDate()+1);
         var user = {
             email: $email.val(),
             firstName: $firstName.val(),
@@ -49,7 +51,7 @@
             username: $username.val(),
             password: $password.val(),
             role: $role.val(),
-            dob: $dob.val(),
+            dateOfBirth: dob,
             phone: $phone.val()
         };
         console.log(user);
@@ -59,15 +61,18 @@
 }
 
     function success() {
-        // if(response == null){
-        //     alert("unable to update");
-        // }
-        // else {
             alert("Updated successfully");
-        // }
     }
 
     function renderUser(user) {
+        console.log(user);
+        var now = new Date(user.dateOfBirth);
+        now.setDate(now.getDate()+1)
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = now.getFullYear()+"-"+(month)+"-"+(day);
+
+        console.log(today);
         console.log(user);
         $email.val(user.email);
         $username.val(user.username);
@@ -76,7 +81,7 @@
         $lastName.val(user.lastName);
         $role.val(user.role);
         $phone.val(user.phone);
-        $dob.val(user.dateOfBirth);
+        $dob.val(today);
         console.log($dob);
     }
 

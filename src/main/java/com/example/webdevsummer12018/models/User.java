@@ -2,10 +2,13 @@ package com.example.webdevsummer12018.models;
 
 import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class User {
@@ -19,6 +22,8 @@ public class User {
 	private String role;
 	private String phone;
 	private String email;
+	
+//	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="GMT")
 	private Date dateOfBirth;
 	
 	public int getId() {

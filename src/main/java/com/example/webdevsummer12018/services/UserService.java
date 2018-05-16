@@ -63,7 +63,6 @@ public class UserService {
 		if(data.isPresent()) {
 			
 			User user = data.get();
-			
 			user.setFirstName(newUser.getFirstName());
 			user.setLastName(newUser.getLastName());
 			user.setDateOfBirth(newUser.getDateOfBirth());

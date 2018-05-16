@@ -64,7 +64,13 @@ function UserServiceClient() {
             headers: {
                 'content-type': 'application/json'
             }
-        });
+        })
+            .then(function (response){
+                if (response.status == 409){
+                    return null;
+                }
+                return response.json();
+            });
     }
 
     function login(username, password) {
