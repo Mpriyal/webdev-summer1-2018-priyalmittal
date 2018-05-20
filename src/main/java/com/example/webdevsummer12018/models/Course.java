@@ -1,6 +1,6 @@
 package com.example.webdevsummer12018.models;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,8 +15,10 @@ public class Course {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String title;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date created;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modified;
 	
