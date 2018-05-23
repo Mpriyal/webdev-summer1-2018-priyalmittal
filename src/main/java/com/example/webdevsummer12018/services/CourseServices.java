@@ -1,6 +1,7 @@
 package com.example.webdevsummer12018.services;
 
 import java.util.Date;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,6 +24,11 @@ public class CourseServices {
 	@GetMapping("/api/course")
 	public Iterable<Course> findAllCourses() {
 		return courseRepository.findAll(); 
+	}
+	
+	@GetMapping("/api/course/{courseId}")
+	public Optional<Course> findCourseById(@PathVariable("courseId") int id) {
+		return courseRepository.findById(id); 
 	}
 	
 	@PostMapping("/api/course") 
