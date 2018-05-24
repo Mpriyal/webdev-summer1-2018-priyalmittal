@@ -18,7 +18,7 @@ public class Course {
 	private int id;
 	private String title;
 	
-	@OneToMany(mappedBy="course")
+	@OneToMany(mappedBy="course",orphanRemoval =true)
 	private List<Module> modules;
 	
 	@Temporal(TemporalType.TIMESTAMP)
