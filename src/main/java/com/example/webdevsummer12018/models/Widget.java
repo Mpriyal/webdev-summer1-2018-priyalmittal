@@ -14,9 +14,10 @@ public class Widget {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String widgetType;
-//	private String name;
 	private String text;
-//	private String className;
+	private int headingWidgetSize;
+	private int widgetOrder;
+	private String href;
 //	private String style;
 //	private String width;
 //	private String height;
@@ -24,17 +25,12 @@ public class Widget {
 	@JsonIgnore
 	private Lesson lesson;
 	
-	// Heading Widget fields:
-	private int headingWidgetSize;
-	private int order;
-	// Link Widget fields:
-	private String href;
-//	// Image Widget fields:
-//	private String src;
-//	// List Widget fields:
-//	private String listItems;
-////	private ListType listType;
-//	
+	enum ListType {
+		ordered, unordered
+	}
+	
+	private String src;
+	private ListType listType;
 	public int getId() {
 		return id;
 	}
@@ -51,12 +47,12 @@ public class Widget {
 		this.widgetType = widgetType;
 	}
 	
-	public int getOrder() {
-		return order;
+	public int getWidgetOrder() {
+		return widgetOrder;
 	}
 	
-	public void setOrder(int order) {
-		this.order = order;
+	public void setWidgetOrder(int widgetOrder) {
+		this.widgetOrder = widgetOrder;
 	}
 	
 	public String getText() {
@@ -65,6 +61,14 @@ public class Widget {
 	
 	public void setText(String text) {
 		this.text = text;
+	}
+	
+	public String getHref() {
+		return href;
+	}
+
+	public void setHref(String href) {
+		this.href = href;
 	}
 	
 	public Lesson getLesson() {
@@ -83,21 +87,6 @@ public class Widget {
 		this.headingWidgetSize = headingWidgetSize;
 	}
 
-//	public String getName() {
-//		return name;
-//	}
-//
-//	public void setName(String name) {
-//		this.name = name;
-//	}
-
-//	public String getClassName() {
-//		return className;
-//	}
-//
-//	public void setClassName(String className) {
-//		this.className = className;
-//	}
 //
 //	public String getStyle() {
 //		return style;
@@ -123,42 +112,21 @@ public class Widget {
 //		this.height = height;
 //	}
 //
-	public String getHref() {
-		return href;
+//
+	public String getSrc() {
+		return src;
 	}
 
-	public void setHref(String href) {
-		this.href = href;
+	public void setSrc(String src) {
+		this.src = src;
 	}
-//
-//	public String getSrc() {
-//		return src;
-//	}
-//
-//	public void setSrc(String src) {
-//		this.src = src;
-//	}
-//
-//	public String getListItems() {
-//		return listItems;
-//	}
-//
-//	public void setListItems(String listItems) {
-//		this.listItems = listItems;
-//	}
 
-//	public ListType getListType() {
-//		return listType;
-//	}
-//
-//	public void setListType(ListType listType) {
-//		this.listType = listType;
-//	}
-	
 
-	
-	
-	
-	
+	public ListType getListType() {
+		return listType;
+	}
 
+	public void setListType(ListType listType) {
+		this.listType = listType;
+	}
 }

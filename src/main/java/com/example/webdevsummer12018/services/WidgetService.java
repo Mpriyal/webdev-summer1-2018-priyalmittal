@@ -1,5 +1,6 @@
 package com.example.webdevsummer12018.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,17 +27,32 @@ public class WidgetService {
 	@Autowired
 	LessonRespository lessonRepository;
 	
-	@GetMapping("/api/widget")
-	public List<Widget> findAllWidgets() {
-		return (List<Widget>) widgetRepository.findAll();
+	@GetMapping("/api/lesson/{lessonId}/widget")
+	public List<Widget> findAllWidgets(@PathVariable("lessonId") int id) {
+		Optional<Lesson> lesson = lessonRepository.findById(id);
+		if(lesson.isPresent()) {
+			Lesson newLesson = lesson.get();
+			return newLesson.getWidgets();
+		}
+		return null;
 	}
 	
-	@PostMapping("/api/widget/save")
-	public void saveAllWidgets(@RequestBody List<Widget> widgets) {
-		widgetRepository.deleteAll();
-		for (Widget widget : widgets) {
-			widgetRepository.save(widget);
-		}
+	@PostMapping("/api/lesson/{lessonId}/widget/save")
+	public void saveAllWidgets(@PathVariable("lessonId") int id, @RequestBody List<Widget> widgets) {
+		List<Widget> widgetList1 = new ArrayList<>();
+			Optional<Lesson> lesson = lessonRepository.findById(id);
+			if(lesson.isPresent()) {
+				Lesson newLesson = lesson.get();
+				List<Widget> widgetList = newLesson.getWidgets();
+				widgetRepository.deleteAll(widgetList);
+				for (Widget widget2 : widgets) {
+					widget2.setLesson(newLesson);
+					widgetRepository.save(widget2);
+				}
+			}
+//		for (Widget widget : widgetList1) {
+//			widgetRepository.save(widget);
+//		}
 	}
 	
 	@GetMapping("/api/widget/{widgetId}")
@@ -65,14 +81,14 @@ public class WidgetService {
 		widgetRepository.deleteById(id);
 	}
 	
-	@GetMapping("/api/lesson/{lessonId}/widget")
-	public List<Widget> findWidgetsOfLesson(@PathVariable("lessonId") int id){
-		Optional<Lesson> lesson = lessonRepository.findById(id);
-		if(lesson.isPresent()) {
-			Lesson newLesson = lesson.get();
-			return newLesson.getWidgets();
-		}
-		return null;
-	}
+//	@GetMapping("/api/lesson/{lessonId}/widget")
+//	public List<Widget> findWidgetsOfLesson(@PathVariable("lessonId") int id){
+//		Optional<Lesson> lesson = lessonRepository.findById(id);
+//		if(lesson.isPresent()) {
+//			Lesson newLesson = lesson.get();
+//			return newLesson.getWidgets();
+//		}
+//		return null;
+//	}
 
 }
