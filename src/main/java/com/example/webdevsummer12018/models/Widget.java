@@ -15,7 +15,6 @@ public class Widget {
 	private int id;
 	private String widgetType;
 //	private String name;
-//	private int order;
 	private String text;
 //	private String className;
 //	private String style;
@@ -27,8 +26,9 @@ public class Widget {
 	
 	// Heading Widget fields:
 	private int headingWidgetSize;
+	private int order;
 	// Link Widget fields:
-//	private String href;
+	private String href;
 //	// Image Widget fields:
 //	private String src;
 //	// List Widget fields:
@@ -51,13 +51,13 @@ public class Widget {
 		this.widgetType = widgetType;
 	}
 	
-//	public int getOrder() {
-//		return order;
-//	}
-//	
-//	public void setOrder(int order) {
-//		this.order = order;
-//	}
+	public int getOrder() {
+		return order;
+	}
+	
+	public void setOrder(int order) {
+		this.order = order;
+	}
 	
 	public String getText() {
 		return text;
@@ -123,13 +123,13 @@ public class Widget {
 //		this.height = height;
 //	}
 //
-//	public String getHref() {
-//		return href;
-//	}
-//
-//	public void setHref(String href) {
-//		this.href = href;
-//	}
+	public String getHref() {
+		return href;
+	}
+
+	public void setHref(String href) {
+		this.href = href;
+	}
 //
 //	public String getSrc() {
 //		return src;
