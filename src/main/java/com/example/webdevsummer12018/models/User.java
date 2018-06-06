@@ -1,14 +1,9 @@
 package com.example.webdevsummer12018.models;
 
-import java.sql.Date;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 public class User {
@@ -18,14 +13,7 @@ public class User {
 	private String username;
 	private String password;
 	private String firstName;
-	private String lastName;
-	private String role;
-	private String phone;
-	private String email;
-	
-//	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="GMT")
-	private Date dateOfBirth;
-	
+	private String lasteName;
 	public int getId() {
 		return id;
 	}
@@ -50,36 +38,10 @@ public class User {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	public String getLastName() {
-		return lastName;
+	public String getLasteName() {
+		return lasteName;
 	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setLasteName(String lasteName) {
+		this.lasteName = lasteName;
 	}
-	public String getRole() {
-		return role;
-	}
-	public void setRole(String role) {
-		this.role = role;
-	}
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public Date getDateOfBirth() {
-		return dateOfBirth;
-	}
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-	
-	
 }

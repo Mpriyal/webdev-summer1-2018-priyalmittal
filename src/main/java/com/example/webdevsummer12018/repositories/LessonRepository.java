@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.example.webdevsummer12018.models.Lesson;
 
-public interface LessonRespository extends CrudRepository<Lesson, Integer>{
+public interface LessonRepository extends CrudRepository<Lesson, Integer> {
 
 }

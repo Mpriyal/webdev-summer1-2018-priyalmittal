@@ -1,8 +1,5 @@
 package com.example.webdevsummer12018.services;
 
-import java.util.Date;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,33 +16,20 @@ import com.example.webdevsummer12018.repositories.CourseRepository;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class CourseServices {
 	@Autowired
-	CourseRepository courseRepository;	
+	CourseRepository courseRepository;
 	
 	@GetMapping("/api/course")
 	public Iterable<Course> findAllCourses() {
 		return courseRepository.findAll(); 
 	}
-	
-	@GetMapping("/api/course/{courseId}")
-	public Optional<Course> findCourseById(@PathVariable("courseId") int id) {
-		return courseRepository.findById(id); 
-	}
-	
-	@PostMapping("/api/course") 
+
+	@PostMapping("/api/course")
 	public Course createCourse(@RequestBody Course course) {
-		Date newDate = new Date();
-		if(course.getModified() == null) {
-			course.setModified(newDate);
-		}
-		if(course.getCreated() == null) {
-			course.setCreated(newDate);
-		}
 		return courseRepository.save(course);
 	}
-	
+
 	@DeleteMapping("/api/course/{courseId}")
 	public void deleteCourse(@PathVariable("courseId") int id) {
 		courseRepository.deleteById(id);
 	}
-
 }

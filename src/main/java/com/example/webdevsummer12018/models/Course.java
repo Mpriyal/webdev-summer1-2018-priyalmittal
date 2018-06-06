@@ -1,5 +1,7 @@
 package com.example.webdevsummer12018.models;
 
+import static org.assertj.core.api.Assertions.allOf;
+
 import java.util.Date;
 import java.util.List;
 
@@ -11,69 +13,49 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Course {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String title;
-	
-	@OneToMany(mappedBy="course",orphanRemoval =true)
-	private List<Module> modules;
-	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date created;
-	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modified;
-	
-	public void modulesOfCourse(Module module) {
-		this.modules.add(module);
-		if(module.getCourse() != this) {
-			module.setCourse(this);
-		}
-	}
-	
+	@OneToMany(mappedBy="course")
+	@JsonIgnore
+	private List<Module> modules;
 	public int getId() {
 		return id;
 	}
-	
 	public void setId(int id) {
 		this.id = id;
 	}
-	
 	public String getTitle() {
 		return title;
 	}
-	
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
 	public Date getCreated() {
 		return created;
 	}
-	
 	public void setCreated(Date created) {
 		this.created = created;
 	}
-	
 	public Date getModified() {
 		return modified;
 	}
-	
 	public void setModified(Date modified) {
 		this.modified = modified;
 	}
-	
 	public List<Module> getModules() {
 		return modules;
 	}
-	
 	public void setModules(List<Module> modules) {
 		this.modules = modules;
-	}	
-	
-	
-
+	}
 }
