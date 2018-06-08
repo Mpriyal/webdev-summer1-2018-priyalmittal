@@ -1,5 +1,4 @@
 package com.example.webdevsummer12018.services;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -11,16 +10,25 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.webdevsummer12018.models.Assignment;
+import com.example.webdevsummer12018.models.Exam;
 import com.example.webdevsummer12018.models.Lesson;
 import com.example.webdevsummer12018.models.Widget;
+import com.example.webdevsummer12018.repositories.AssignmentRepository;
+import com.example.webdevsummer12018.repositories.ExamRepository;
 import com.example.webdevsummer12018.repositories.LessonRepository;
 import com.example.webdevsummer12018.repositories.WidgetRepository;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class WidgetService {
+	
 	@Autowired
 	WidgetRepository repository;
+	@Autowired
+	ExamRepository examRepository;
+	@Autowired
+	AssignmentRepository assignmentRepository;
 	@Autowired
 	LessonRepository lessonRepository;
 	
@@ -32,6 +40,31 @@ public class WidgetService {
 			return lesson.getWidgets();
 		}
 		return null;
+	}
+	
+	@PostMapping("/api/lesson/{lessonId}/exam")
+	public void saveExamsForLesson(@RequestBody
+			Exam exam,
+			@PathVariable("lessonId") int lessonId) {
+		Optional<Lesson> data = lessonRepository.findById(lessonId);
+		if(data.isPresent()) {
+			Lesson lesson = data.get();
+			exam.setLesson(lesson);
+			examRepository.save(exam);
+		}
+	}
+	
+	@PostMapping("/api/lesson/{lessonId}/assignment")
+	public void saveAssignmentsForLesson(@RequestBody
+			Assignment assignment,
+			@PathVariable("lessonId") int lessonId) {
+		Optional<Lesson> data = lessonRepository.findById(lessonId);
+		
+		if(data.isPresent()) {
+			Lesson lesson = data.get();
+			assignment.setLesson(lesson);
+			assignmentRepository.save(assignment);
+		}
 	}
 	
 	@PostMapping("/api/widget/save")
@@ -46,29 +79,5 @@ public class WidgetService {
 	@GetMapping("/api/widget")
 	public List<Widget> findAllWidgets() {
 		return (List<Widget>) repository.findAll();
-	}
-	
-	@PostMapping("/api/lesson/{lessonId}/exam")
-	public void saveExamWidgetForLesson(@RequestBody Widget widget,
-			@PathVariable("lessonId") int lessonId) {
-		System.out.println("Inside");
-		Optional<Lesson> data = lessonRepository.findById(lessonId);
-		if(data.isPresent()) {
-			Lesson lesson = data.get();
-				widget.setLesson(lesson);
-				repository.save(widget);
-		}
-	}
-	
-	@PostMapping("/api/lesson/{lessonId}/assignment")
-	public void saveAssignmentWidgetForLesson(@RequestBody Widget widget,
-			@PathVariable("lessonId") int lessonId) {
-		System.out.println("Inside");
-		Optional<Lesson> data = lessonRepository.findById(lessonId);
-		if(data.isPresent()) {
-			Lesson lesson = data.get();
-				widget.setLesson(lesson);
-				repository.save(widget);
-		}
 	}
 }
