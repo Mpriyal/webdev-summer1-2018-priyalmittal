@@ -19,7 +19,7 @@ import com.example.webdevsummer12018.repositories.WidgetRepository;
 import com.example.webdevsummer12018.repositories.LessonRespository;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*",maxAge=3600)
 public class WidgetService {
 	@Autowired
 	WidgetRepository widgetRepository;
